@@ -263,10 +263,10 @@ const CyberMatrixHero = () => {
                 animate={{
                   opacity: 1,
                   scale: 1,
-                  textShadow: "0 0 40px rgba(255,0,0,0.6), 0 0 90px rgba(255,0,0,0.35)"
+                  textShadow: "0 0 28px rgba(255,26,26,0.65), 0 0 70px rgba(255,26,26,0.4)"
                 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="block w-full font-black text-[clamp(4rem,19vw,15rem)] uppercase tracking-[0.18em] bg-clip-text text-transparent bg-gradient-to-b from-white via-[#ffeaea] to-[#ff3b3b]"
+                className="block w-full font-black text-[clamp(4rem,19vw,15rem)] uppercase tracking-[0.18em] text-[#ff1a1a]"
               >
                 BYTE
               </motion.span>

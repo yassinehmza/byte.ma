@@ -62,3 +62,49 @@ body {
 * {
   border-color: hsl(var(--border));
 }
+
+/* About section animations */
+@keyframes neonPulse {
+  0%, 100% { text-shadow: 0 0 24px rgba(255,26,26,0.45), 0 0 54px rgba(255,26,26,0.28); }
+  50% { text-shadow: 0 0 38px rgba(255,26,26,0.72), 0 0 90px rgba(255,26,26,0.45); }
+}
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(26px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scanHoriz {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Lines default hidden until section is in view */
+.about-title .line {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.about-in-view .about-title .line {
+  animation: rise 700ms ease-out both, neonPulse 2800ms ease-in-out infinite;
+  will-change: transform, opacity, text-shadow;
+}
+.about-in-view .about-title .line:nth-child(1) { animation-delay: 80ms, 0ms; }
+.about-in-view .about-title .line:nth-child(2) { animation-delay: 160ms, 0ms; }
+.about-in-view .about-title .line:nth-child(3) { animation-delay: 240ms, 0ms; }
+
+.about-overlay-scan {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 12px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,26,26,0.6) 50%, transparent 100%);
+  filter: blur(8px);
+  opacity: 0;
+  background-size: 200% 100%;
+  animation: scanHoriz 6s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+.about-in-view .about-overlay-scan {
+  opacity: 0.35;
+  animation-play-state: running;
+}

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import CyberMatrixHero from '@/components/ui/cyber-matrix-hero'
 import LogoMark from '@/assets/byte shape.png'
+import AboutBg from '@/assets/image.png'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -13,6 +14,17 @@ const navLinks = [
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const aboutRef = useRef(null)
+  const [aboutInView, setAboutInView] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setAboutInView(entry.isIntersecting),
+      { root: null, threshold: 0.3 }
+    )
+    if (aboutRef.current) observer.observe(aboutRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -68,9 +80,52 @@ export default function App() {
       </header>
 
       <main className="pt-24">
-        <CyberMatrixHero />
-        <section className="h-screen flex items-center justify-center text-white text-4xl text-center p-8">
-          <p>This section is a placeholder for the rest of your page content.</p>
+        <section id="home">
+          <CyberMatrixHero />
+        </section>
+
+        <section
+          id="about"
+          ref={aboutRef}
+          className={`relative overflow-hidden bg-black text-white ${aboutInView ? 'about-in-view' : ''}`}
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.86) 30%, rgba(0,0,0,0.95) 100%), url(${AboutBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_30%,rgba(255,0,0,0.28),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(255,0,0,0.2),transparent_30%)]" aria-hidden="true" />
+          <div className="absolute inset-0 mix-blend-screen opacity-15 bg-[repeating-linear-gradient(90deg,rgba(255,0,0,0.3)_0,rgba(255,0,0,0.3)_1px,transparent_1px,transparent_14px)]" aria-hidden="true" />
+
+          <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-28">
+            <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-16 items-center">
+              <div className="space-y-3">
+                <p className="text-sm uppercase tracking-[0.25em] text-white/70">About Us</p>
+                <div className="leading-none text-[#ff1a1a] about-title" style={{ textShadow: '0 0 24px rgba(255,0,0,0.55), 0 0 54px rgba(255,0,0,0.35)' }}>
+                  <div className="line text-[4.5rem] sm:text-[7rem] md:text-[10rem] font-extrabold">WHO</div>
+                  <div className="line text-[4.5rem] sm:text-[7rem] md:text-[10rem] font-extrabold">WE</div>
+                  <div className="line text-[4.5rem] sm:text-[7rem] md:text-[10rem] font-extrabold">ARE</div>
+                </div>
+              </div>
+
+              <div className="relative md:pl-10">
+                <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-red-500/40 to-transparent" aria-hidden="true" />
+                <div className="space-y-4 text-white/80 text-base sm:text-lg leading-relaxed">
+                  <p>
+                    BYTE is a digital agency dedicated to transforming ideas into powerful digital experiences. We believe that every successful digital project starts from the smallest unit of information — the bit — and grows into something impactful, innovative, and meaningful.
+                  </p>
+                  <p>
+                    We design and develop modern websites, create strong digital identities, and build strategic digital solutions that help businesses grow, stand out, and connect with their audience. Our approach is based on creativity, precision, and technology, ensuring professional results and long-lasting value.
+                  </p>
+                  <p>
+                    At BYTE, we don’t just create digital products — we build digital presence, reliability, and opportunities.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="about-overlay-scan" aria-hidden="true" />
+          </div>
         </section>
       </main>
     </div>
