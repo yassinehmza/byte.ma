@@ -251,19 +251,35 @@ const CyberMatrixHero = () => {
           )}
 
           {finalVisible && (
-            <motion.span
+            <motion.div
               key="byte-final"
-              initial={{ opacity: 0, scale: 0.82 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                textShadow: "0 0 40px rgba(255,0,0,0.6), 0 0 90px rgba(255,0,0,0.35)"
-              }}
-              transition={{ duration: 0.65, ease: "easeOut" }}
-              className="block w-full font-black text-[clamp(4rem,19vw,15rem)] uppercase tracking-[0.18em] bg-clip-text text-transparent bg-gradient-to-b from-white via-[#ffeaea] to-[#ff3b3b]"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex w-full flex-col items-center gap-5 text-center sm:gap-6"
             >
-              BYTE
-            </motion.span>
+              <motion.span
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  textShadow: "0 0 40px rgba(255,0,0,0.6), 0 0 90px rgba(255,0,0,0.35)"
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="block w-full font-black text-[clamp(4rem,19vw,15rem)] uppercase tracking-[0.18em] bg-clip-text text-transparent bg-gradient-to-b from-white via-[#ffeaea] to-[#ff3b3b]"
+              >
+                BYTE
+              </motion.span>
+
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
+                className="max-w-3xl text-[clamp(1rem,3.2vw,1.7rem)] font-semibold tracking-wide text-[#ffd6d6] drop-shadow-[0_0_18px_rgba(255,0,0,0.35)]"
+              >
+                From 0s and 1s to digital impact.
+              </motion.p>
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
