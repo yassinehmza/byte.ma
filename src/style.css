@@ -108,3 +108,87 @@ body {
   opacity: 0.35;
   animation-play-state: running;
 }
+
+/* Philosophy section animations */
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 0 0 28px rgba(255,26,26,0.55), 0 0 60px rgba(255,26,26,0.3); }
+  50% { text-shadow: 0 0 40px rgba(255,26,26,0.75), 0 0 85px rgba(255,26,26,0.45); }
+}
+
+.philosophy-vertical-title {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.philosophy-in-view .philosophy-vertical-title {
+  animation: rise 800ms ease-out 200ms both, titleGlow 3200ms ease-in-out infinite;
+}
+
+.philosophy-box {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.philosophy-in-view .philosophy-box {
+  animation: slideInRight 700ms ease-out both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 500ms ease-out;
+}
+
+/* Philosophy floating objects */
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(30px, -40px) rotate(90deg); }
+  50% { transform: translate(-20px, -80px) rotate(180deg); }
+  75% { transform: translate(-50px, -40px) rotate(270deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-40px, 50px) rotate(120deg); }
+  66% { transform: translate(40px, 30px) rotate(240deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, -60px) scale(1.2); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.philosophy-floater {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.philosophy-in-view .philosophy-floater {
+  opacity: 1;
+  transition: opacity 800ms ease-out;
+}
