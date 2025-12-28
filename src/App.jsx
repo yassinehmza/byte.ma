@@ -80,8 +80,10 @@ export default function App() {
       </header>
 
       <main className="pt-24">
-        <section id="home">
+        <section id="home" className="relative">
           <CyberMatrixHero />
+          {/* Smooth blend into About */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-black/60 to-black" aria-hidden="true" />
         </section>
 
         <section
@@ -95,6 +97,8 @@ export default function App() {
             backgroundRepeat: 'no-repeat',
           }}
         >
+          {/* Top gradient to blend with Home */}
+          <div className="pointer-events-none absolute inset-x-0 -top-10 h-10 bg-gradient-to-b from-black via-black/80 to-transparent" aria-hidden="true" />
           <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_30%,rgba(255,0,0,0.28),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(255,0,0,0.2),transparent_30%)]" aria-hidden="true" />
           <div className="absolute inset-0 mix-blend-screen opacity-15 bg-[repeating-linear-gradient(90deg,rgba(255,0,0,0.3)_0,rgba(255,0,0,0.3)_1px,transparent_1px,transparent_14px)]" aria-hidden="true" />
 
