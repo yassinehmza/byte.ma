@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import CyberMatrixHero from '@/components/ui/cyber-matrix-hero'
+import { MethodNeon } from '@/components/MethodNeon'
 import LogoMark from '@/assets/byte shape.png'
 import AboutBg from '@/assets/image.png'
 
@@ -277,7 +278,7 @@ export default function App() {
             <div className="grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 items-start">
               <div className="flex items-center justify-center md:justify-start">
                 <h2
-                  className="philosophy-vertical-title text-[#ff1a1a] text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap"
+                  className="text-[#ff1a1a] text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap"
                   style={{
                     writingMode: 'vertical-rl',
                     textOrientation: 'mixed',
@@ -312,6 +313,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <MethodNeon />
       </main>
     </div>
   )
