@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import CyberMatrixHero from '@/components/ui/cyber-matrix-hero'
 import { MethodNeon } from '@/components/MethodNeon'
+import { ServicesNeon } from '@/components/ServicesNeon'
 import LogoMark from '@/assets/byte shape.png'
 import AboutBg from '@/assets/image.png'
 
@@ -315,6 +316,7 @@ export default function App() {
         </section>
 
         <MethodNeon />
+        <ServicesNeon />
       </main>
     </div>
   )
