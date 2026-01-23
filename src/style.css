@@ -192,3 +192,21 @@ body {
   opacity: 1;
   transition: opacity 800ms ease-out;
 }
+
+/* Contact Section Animations */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 26, 26, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 26, 26, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
