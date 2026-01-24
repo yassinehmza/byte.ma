@@ -91,6 +91,24 @@ body {
   letter-spacing: 0;
 }
 
+.services-hero-stage {
+  padding: 0 1.5rem 1.5rem;
+  align-items: flex-end;
+}
+
+.services-hero-text {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(5rem, 20vw, 24vw);
+  line-height: 0.78;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-shadow: 0 0 32px rgba(255, 255, 255, 0.35);
+  animation: none;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 .about-section-indicator {
   margin: 5rem auto 0;
   display: flex;

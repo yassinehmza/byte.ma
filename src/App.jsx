@@ -3,12 +3,13 @@ import { Link, Routes, Route, useLocation } from 'react-router-dom'
 import LogoMark from '@/assets/byte shape.png'
 import Home from '@/pages/Home'
 import About from '@/pages/About'
+import Services from '@/pages/Services'
 
 const navLinks = [
   { label: 'Home', type: 'route', to: '/' },
   { label: 'About', type: 'route', to: '/about' },
   { label: 'Method', type: 'hash', hash: '#method' },
-  { label: 'Services', type: 'hash', hash: '#services' },
+  { label: 'Services', type: 'route', to: '/services' },
   { label: 'Why Byte', type: 'hash', hash: '#why-byte' },
   { label: 'Contact', type: 'hash', hash: '#contact' },
 ]
@@ -84,6 +85,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </main>
     </div>
