@@ -10,7 +10,6 @@ const navLinks = [
   { label: 'Method', type: 'hash', hash: '#method' },
   { label: 'Services', type: 'hash', hash: '#services' },
   { label: 'Why Byte', type: 'hash', hash: '#why-byte' },
-    
   { label: 'Contact', type: 'hash', hash: '#contact' },
 ]
 

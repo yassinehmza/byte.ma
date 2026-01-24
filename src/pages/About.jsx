@@ -40,7 +40,7 @@ export default function About() {
 
   return (
     <div className="bg-black text-white">
-      <section className={`about-hero-stage min-h-[87vh] w-full flex items-end justify-center pb-12`}>
+      <section id="about-top" className={`about-hero-stage min-h-[87vh] w-full flex items-end justify-center pb-12`}>
         <p
           className={`about-hero-text text-white text-[50vw] md:text-[27vw] font-semibold leading-none tracking-tight ${heroPinned ? 'about-hero-text--pinned' : ''}`}
         >
@@ -54,9 +54,9 @@ export default function About() {
             className={`about-band-intro flex h-full items-center justify-between border-x border-white/35 px-4 py-4 lg:px-10 ${heroPinned ? 'about-band-intro--active' : ''}`}
           >
             <div>
-              <div className="flex items-center gap-6 text-[0.65rem] uppercase tracking-[0.45em] text-white/70">
-                <span>01</span>
-                <span>Who we are</span>
+              <div className="flex items-center gap-6 text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-[#ff1a1a]">
+                <span className="about-label-chip">01</span>
+                <span className="about-label-chip">Who we are</span>
               </div>
               <p
                 className={`about-band-copy mt-4 text-xl font-semibold uppercase leading-tight tracking-[0.04em] sm:text-2xl md:text-3xl ${heroPinned ? 'about-band-copy--visible' : ''}`}
@@ -73,6 +73,7 @@ export default function About() {
             <div className="p-4">
               <div
                 data-animate="about"
+                data-animate-dir="left"
                 className="about-animate about-photo-frame relative h-full min-h-[10cm] bg-black"
               >
                 <img
@@ -85,32 +86,46 @@ export default function About() {
 
             <div
               data-animate="about"
+              data-animate-dir="right"
               className="about-animate about-story-block flex min-h-[3cm] flex-col items-end justify-start gap-6 px-6 py-6 text-right text-sm uppercase tracking-[0.08em] text-white/80 sm:text-base"
             >
-              <p className="mx-auto w-full max-w-xl leading-relaxed">
+              <p
+                data-animate="about"
+                style={{ transitionDelay: '120ms' }}
+                className="about-animate about-para mx-auto w-full max-w-xl leading-relaxed"
+              >
                 Founded by two partners sharing the same passion and complementary skills,
-                <span className="font-semibold text-white"> we design and develop a wide range of digital solutions for various platforms, formats, and audiences</span>, approaching every project with care and dedication.
+                <span className="font-semibold about-inline-neon"> we design and develop a wide range of digital solutions for various platforms, formats, and audiences</span>, approaching every project with care and dedication.
               </p>
-              <p className="mx-auto w-full max-w-xl leading-relaxed">
+              <p
+                data-animate="about"
+                style={{ transitionDelay: '220ms' }}
+                className="about-animate about-para mx-auto w-full max-w-xl leading-relaxed"
+              >
                 We create and deliver
-                <span className="font-semibold text-white"> original digital experiences—from websites and brand identities to strategic solutions</span>, while also offering
-                <span className="font-semibold text-white"> digital services for local and global brands and agencies.</span>
+                <span className="font-semibold about-inline-neon"> original digital experiences—from websites and brand identities to strategic solutions</span>, while also offering
+                <span className="font-semibold about-inline-neon"> digital services for local and global brands and agencies.</span>
               </p>
             </div>
           </div>
         </div>
         <div className="px-4 pb-4 lg:px-12">
-          <div className="h-px w-full bg-white/25" aria-hidden="true" />
+          <div
+            data-animate="about"
+            data-animate-dir="left"
+            className="about-animate about-divider h-px w-full bg-white/25"
+            aria-hidden="true"
+          />
         </div>
       </section>
 
       <section className="border-b border-white/25 px-4 py-16 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="border-b border-white/20 pb-12">
-            <div data-animate="about" className="about-animate space-y-6 text-left">
-              <div className="flex gap-6 font-mono text-[0.65rem] uppercase tracking-[0.45em] text-white/70">
-                <span>02</span>
-                <span>What we do</span>
+            <div data-animate="about" data-animate-dir="left" className="about-animate space-y-6 text-left">
+              <div className="flex gap-6 font-mono text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-[#ff1a1a]">
+                <span className="about-label-chip">02</span>
+                <span className="about-label-chip">What we do</span>
               </div>
               <h2 className="mt-4 text-xl font-semibold uppercase leading-tight tracking-[0.04em] sm:text-2xl md:text-3xl">
                 We use creativity, strategy, and technology to design and develop powerful digital experiences for forward-thinking brands.
@@ -118,21 +133,64 @@ export default function About() {
             </div>
           </div>
 
-          <div className="mt-6 divide-y divide-white/15">
+          <div className="mt-6 border-t border-white/15">
             {serviceHighlights.map((service, index) => (
               <div
                 key={service}
-                className="group relative flex flex-col gap-6 py-6 transition-colors md:flex-row md:items-center"
+                data-animate="about"
+                data-animate-dir="up"
+                style={{ transitionDelay: `${index * 70}ms` }}
+                className="about-animate about-service-row group relative flex flex-col gap-6 py-6 transition-colors md:flex-row md:items-center"
               >
                 <div className="flex flex-1 items-center justify-between pr-6">
-                  <span className="text-3xl font-semibold uppercase tracking-[0.08em] sm:text-5xl md:text-6xl">
+                  <span className="service-label text-3xl font-semibold uppercase tracking-[0.08em] sm:text-5xl md:text-6xl">
                     {service}
                   </span>
                 </div>
-                <span className="text-xs uppercase tracking-[0.4em] text-white/60">↗</span>
+                <span className="service-arrow text-xs uppercase tracking-[0.4em] text-white/60">↗</span>
               </div>
             ))}
           </div>
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+<br />
+<br />
+
+          <div className="about-marquee-wrapper" aria-hidden="true">
+            <div className="about-marquee-track">
+              {[...Array(2)].map((_, outerIndex) => (
+                <div key={outerIndex} className="about-marquee-group">
+                  <p className="about-marquee-text">BYTE AGENCY</p>
+                  <p className="about-marquee-text about-marquee-alt">BYTE ACENCY</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="about-section-indicator"
+            aria-label="Back to top"
+            onClick={() => document.getElementById('about-top')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="about-section-track">
+              <span className="about-section-runner" />
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="about-section-icon"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />
+            </svg>
+          </button>
         </div>
       </section>
     </div>
