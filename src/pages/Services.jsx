@@ -5,6 +5,13 @@ import OperationsImg from '@/assets/operationnel.png'
 import BookingImg from '@/assets/booking.png'
 import MobileImg from '@/assets/mobil.png'
 import HostingImg from '@/assets/image.png'
+import VisualIdentityImg from '@/assets/visualIdenditiy.png'
+import PrintDesignImg from '@/assets/PrintDesing.png'
+import DigitalDesignImg from '@/assets/digitalDesing.png'
+import SocialStrategyImg from '@/assets/stratigy.png'
+import SocialContentImg from '@/assets/content.png'
+import SocialPlanningImg from '@/assets/planing.png'
+import SocialCommunityNewImg from '@/assets/ccommuntiy.png'
 
 const serviceOptions = [
   { id: 'website-creation', label: 'Website Creation' },
@@ -80,6 +87,85 @@ const serviceDetails = {
     title: 'Branding & Design',
     description:
       'We build brand systems that feel unmistakably yours—from logotype and typography to 3D textures, motion, and launch assets. Every deliverable is rooted in strategy, crafted to scale across campaigns, and art-directed so it looks premium on every screen.',
+    bullets: [
+      {
+        title: 'Visual strategy',
+        body: 'Mood boards, positioning statements, and messaging pillars that align your brand voice before we draw the first line.',
+      },
+      {
+        title: 'Design systems',
+        body: 'Logos, iconography, typography stacks, and UI kits documented in crystal-clear guidelines for your teams and partners.',
+      },
+      {
+        title: 'Launch assets',
+        body: 'Campaign-ready graphics, motion snippets, and templates so your new identity ships consistently across every channel.',
+      },
+    ],
+    categories: [
+      {
+        name: 'Visual Identity & Branding',
+        description:
+          'Logos, color systems, and typography combinations that mirror your values and scale across print, product, and digital.',
+        image: VisualIdentityImg,
+      },
+      {
+        name: 'Print & Editorial Systems',
+        description:
+          'Brand books, packaging, stationery, and long-form layouts crafted to keep every touchpoint coherent and premium.',
+        image: PrintDesignImg,
+      },
+      {
+        name: 'Digital Brand Assets',
+        description:
+          'Social kits, ad creatives, newsletter layouts, and motion snippets that captivate audiences across every digital surface.',
+        image: DigitalDesignImg,
+      },
+    ],
+  },
+  'social-media': {
+    title: 'Social Media Management',
+    description:
+      'We operate your social channels like a newsroom and a creative studio combined—planning narratives, producing native-first assets, and optimizing every post so your community stays engaged and growing.',
+    bullets: [
+      {
+        title: 'Editorial strategy',
+        body: 'Audience research, voice guidelines, and content pillars translated into agile monthly and weekly roadmaps.',
+      },
+      {
+        title: 'Content production',
+        body: 'Short-form video, motion graphics, carousels, and stories tailored to each platform’s best practices.',
+      },
+      {
+        title: 'Community & reporting',
+        body: 'Always-on moderation, inbox management, and reporting dashboards that surface KPIs and next actions.',
+      },
+    ],
+    categories: [
+      {
+        name: 'Strategy',
+        description:
+          'Brand analysis, audience profiling, platform selection (Instagram, TikTok, LinkedIn, etc.) and tone of voice definition so every post has a purpose.',
+        image: SocialStrategyImg,
+      },
+      {
+        name: 'Content Creation',
+        description:
+          'Posts, stories, carousels, reels, shorts, captions, hashtags—everything crafted to look and feel like your brand, everywhere.',
+        image: SocialContentImg,
+      },
+      {
+        name: 'Planning & Publication',
+        description:
+          'Editorial calendars, optimal frequencies, perfect posting times, and automation so your presence stays consistent.',
+        image: SocialPlanningImg,
+      },
+      {
+        name: 'Community Management',
+        description:
+          'Comment replies, DMs, interactions, and moderation loops run in real-time so the brand remains warm and human.',
+        image: SocialCommunityNewImg,
+      },
+    ],
   },
 }
 
@@ -196,6 +282,7 @@ export default function Services() {
                     </div>
                   </div>
                 )}
+
               </div>
             </div>
 
