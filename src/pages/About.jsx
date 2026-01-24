@@ -19,6 +19,16 @@ export default function About() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+    const topSection = document.getElementById('about-top')
+    if (topSection) {
+      topSection.scrollIntoView({ behavior: 'auto', block: 'start' })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
     const targets = document.querySelectorAll('[data-animate="about"]')
     if (!targets.length) return
 
@@ -147,7 +157,7 @@ export default function About() {
                     {service}
                   </span>
                 </div>
-                <span className="service-arrow text-xs uppercase tracking-[0.4em] text-white/60">↗</span>
+                
               </div>
             ))}
           </div>
