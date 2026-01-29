@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import HeroStill from '@/assets/nous.png'
 
 const serviceHighlights = [
-  'Website Creation',
-  'Branding & Design',
-  'Social Media Management',
-  'Video & Content Creation',
-  'Website Management',
+  { label: 'Website Creation', id: 'website-creation' },
+  { label: 'Branding & Design', id: 'branding-design' },
+  { label: 'Digital Design & Printing', id: 'digital-print' },
+  { label: 'Social Media Management', id: 'social-media' },
+  { label: 'Video & Content Creation', id: 'video-content' },
+  { label: 'Website Management', id: 'website-management' },
 ]
 
 export default function About() {
@@ -145,20 +147,20 @@ export default function About() {
 
           <div className="mt-6 border-t border-white/15">
             {serviceHighlights.map((service, index) => (
-              <div
-                key={service}
+              <Link
+                key={service.id}
                 data-animate="about"
                 data-animate-dir="up"
                 style={{ transitionDelay: `${index * 70}ms` }}
                 className="about-animate about-service-row group relative flex flex-col gap-6 py-6 transition-colors md:flex-row md:items-center"
+                to={{ pathname: '/services', search: `?service=${service.id}` }}
               >
                 <div className="flex flex-1 items-center justify-between pr-6">
                   <span className="service-label text-3xl font-semibold uppercase tracking-[0.08em] sm:text-5xl md:text-6xl">
-                    {service}
+                    {service.label}
                   </span>
                 </div>
-                
-              </div>
+              </Link>
             ))}
           </div>
 <br />

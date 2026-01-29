@@ -289,46 +289,6 @@ export function MethodNeon() {
           <div className="relative z-10 h-96" />
         </motion.div>
 
-        {/* CTA Section */}
-        <motion.div
-          className="flex justify-end mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: false, margin: "-100px" }}
-        >
-          <motion.button
-            className="group relative px-10 py-4 font-bold text-white border-2 border-red-500 rounded-xl overflow-hidden transition-all duration-300"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255,26,26,0.6)" }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-red-500/5 group-hover:from-red-600/40 group-hover:to-red-500/20 transition-all duration-300" />
-            
-            {/* Shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-10"
-              animate={{
-                x: ["−100%", "100%"],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-              }}
-            />
-
-            {/* Content */}
-            <span className="relative flex items-center gap-3">
-              Explore Our Full Method
-              <motion.div
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="w-5 h-5" />
-              </motion.div>
-            </span>
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

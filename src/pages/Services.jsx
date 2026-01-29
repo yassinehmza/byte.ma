@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { sendContactEmail } from '@/lib/utils'
 import ShowcaseImg from '@/assets/showcases.png'
 import EcommerceImg from '@/assets/e-commerce.png'
 import OperationsImg from '@/assets/operationnel.png'
@@ -16,6 +18,7 @@ import SocialCommunityNewImg from '@/assets/ccommuntiy.png'
 const serviceOptions = [
   { id: 'website-creation', label: 'Website Creation' },
   { id: 'branding-design', label: 'Branding & Design' },
+  { id: 'digital-print', label: 'Digital Design & Printing' },
   { id: 'social-media', label: 'Social Media Management' },
   { id: 'video-content', label: 'Video & Content Creation' },
   { id: 'website-management', label: 'Website Management' },
@@ -122,6 +125,45 @@ const serviceDetails = {
       },
     ],
   },
+  'digital-print': {
+    title: 'Digital Design & Printing',
+    description:
+      'We bridge on-screen energy with tactile storytelling. From responsive digital canvases to premium print runs, every asset is color-managed, production-ready, and perfectly aligned with your brand system.',
+    bullets: [
+      {
+        title: 'Integrated art direction',
+        body: 'Unified creative direction across digital, print, and out-of-home formats so every campaign feels cohesive.',
+      },
+      {
+        title: 'Production-ready files',
+        body: 'Color profiles, bleed, dielines, and press checks handled in-house to eliminate last-minute surprises.',
+      },
+      {
+        title: 'Agile refresh cycles',
+        body: 'Template libraries and modular layouts that let your team localize or iterate without breaking consistency.',
+      },
+    ],
+    categories: [
+      {
+        name: 'Digital Campaign Kits',
+        description:
+          'Responsive social assets, email layouts, and paid-media variations optimized for every placement and screen size.',
+        image: DigitalDesignImg,
+      },
+      {
+        name: 'Print & Editorial',
+        description:
+          'Lookbooks, brochures, packaging, and stationery systems crafted with premium materials and finish recommendations.',
+        image: PrintDesignImg,
+      },
+      {
+        name: 'Large-Format & Merch',
+        description:
+          'Booth graphics, outdoor visuals, and merchandise artwork engineered for impact at any scale.',
+        image: VisualIdentityImg,
+      },
+    ],
+  },
   'social-media': {
     title: 'Social Media Management',
     description:
@@ -167,11 +209,92 @@ const serviceDetails = {
       },
     ],
   },
+  'video-content': {
+    title: 'Video & Content Creation',
+    description:
+      'We combine cinematic direction with agile post-production to deliver scroll-stopping assets for launches, socials, and campaigns. Every piece is storyboarded, shot, and edited to fit the exact channel requirements.',
+    bullets: [
+      {
+        title: 'Narrative-first production',
+        body: 'Concepts, scripts, and shot lists aligned with campaign goals before we roll cameras or open After Effects.',
+      },
+      {
+        title: 'Full-service studio',
+        body: 'On-set direction, lighting, motion graphics, and sound design handled in-house for tighter turnarounds.',
+      },
+      {
+        title: 'Platform-ready exports',
+        body: 'Cutdowns, aspect ratios, and caption files delivered per network so assets are ready to publish instantly.',
+      },
+    ],
+    categories: [
+      {
+        name: 'Campaign Films',
+        description:
+          'Hero videos, explainers, and launch edits crafted with modular storytelling for repurposing across paid and owned channels.',
+        image: null,
+      },
+      {
+        name: 'Social & Vertical',
+        description:
+          'Short-form reels, stories, and UGC-style clips optimized frame-by-frame for retention and conversions.',
+        image: null,
+      },
+      {
+        name: 'Content Systems',
+        description:
+          'Template-driven motion packages and lower thirds that keep recurring series consistent without stifling creativity.',
+        image: null,
+      },
+    ],
+  },
+  'website-management': {
+    title: 'Website Management',
+    description:
+      'We stay on top of your site after launch—shipping updates, monitoring performance, and iterating UX so every visit feels fast, secure, and on-brand.',
+    bullets: [
+      {
+        title: 'Data-backed improvements',
+        body: 'Analytics reviews, heatmaps, and CRO experiments that turn insight into measurable gains.',
+      },
+      {
+        title: 'Content & feature updates',
+        body: 'New pages, seasonal campaigns, and integration tweaks handled without derailing your internal team.',
+      },
+      {
+        title: 'Reliability & security',
+        body: 'Uptime monitoring, backups, and dependency updates so your stack stays hardened and compliant.',
+      },
+    ],
+    categories: [
+      {
+        name: 'Growth Sprints',
+        description:
+          'Monthly or quarterly optimization cycles focused on speed, SEO, and conversion wins.',
+        image: null,
+      },
+      {
+        name: 'Content Operations',
+        description:
+          'Editorial support, localization, and multimedia publishing workflows managed inside your CMS.',
+        image: null,
+      },
+      {
+        name: 'Technical Care',
+        description:
+          'Infrastructure patches, dependency upgrades, and incident response runbooks ready when you need them.',
+        image: null,
+      },
+    ],
+  },
 }
 
 export default function Services() {
   const [heroPinned, setHeroPinned] = useState(false)
   const [selectedService, setSelectedService] = useState(serviceOptions[0].id)
+  const [serviceForm, setServiceForm] = useState({ name: '', email: '', summary: '' })
+  const [serviceFormStatus, setServiceFormStatus] = useState({ submitting: false, success: false, error: '' })
+  const location = useLocation()
 
   useEffect(() => {
     const timer = setTimeout(() => setHeroPinned(true), 1000)
@@ -188,7 +311,48 @@ export default function Services() {
     }
   }, [])
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const requestedService = params.get('service')
+    if (requestedService && serviceOptions.some(option => option.id === requestedService)) {
+      setSelectedService(requestedService)
+    } else if (!requestedService) {
+      setSelectedService(serviceOptions[0].id)
+    }
+  }, [location.search])
+
   const activeService = useMemo(() => serviceDetails[selectedService], [selectedService])
+
+  const handleServiceFormChange = (event) => {
+    const { name, value } = event.target
+    setServiceForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleServiceFormSubmit = async (event) => {
+    event.preventDefault()
+    setServiceFormStatus({ submitting: true, success: false, error: '' })
+
+    const serviceLabel = serviceOptions.find((option) => option.id === selectedService)?.label ?? 'Service Inquiry'
+
+    try {
+      await sendContactEmail({
+        name: serviceForm.name,
+        email: serviceForm.email,
+        subject: `Services Page — ${serviceLabel}`,
+        message: serviceForm.summary || 'No additional project summary provided.',
+        source: 'Services page form',
+      })
+
+      setServiceForm({ name: '', email: '', summary: '' })
+      setServiceFormStatus({ submitting: false, success: true, error: '' })
+    } catch (error) {
+      setServiceFormStatus({
+        submitting: false,
+        success: false,
+        error: error?.message || 'Unable to send your request right now. Please try again.',
+      })
+    }
+  }
 
   return (
     <div className="bg-black text-white">
@@ -286,19 +450,23 @@ export default function Services() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-black/65 p-6 sm:p-8 shadow-2xl shadow-red-500/10 backdrop-blur-lg md:sticky md:top-28 self-start">
+            <div className="rounded-3xl bg-black/65 p-6 sm:p-8 shadow-2xl shadow-red-500/10 backdrop-blur-lg md:sticky md:top-28 self-start">
               <div className="mb-8 space-y-2">
                 <p className="text-xs uppercase tracking-[0.45em] text-[#ff1a1a]">Contact</p>
                 <h2 className="text-2xl font-semibold leading-tight">Tell us about your project</h2>
                 <p className="text-sm text-white/70">Share a few details and choose the service you need. We reply in under 24h.</p>
               </div>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleServiceFormSubmit}>
                 <div>
                   <label className="text-xs uppercase tracking-[0.3em] text-white/60">Full name</label>
                   <input
                     type="text"
                     placeholder="Your name"
-                    className="mt-2 w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 focus:border-white/60 focus:outline-none"
+                    name="name"
+                    value={serviceForm.name}
+                    onChange={handleServiceFormChange}
+                    required
+                    className="mt-2 w-full rounded-lg bg-white/10 px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                 </div>
                 <div>
@@ -306,13 +474,17 @@ export default function Services() {
                   <input
                     type="email"
                     placeholder="you@company.com"
-                    className="mt-2 w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 focus:border-white/60 focus:outline-none"
+                    name="email"
+                    value={serviceForm.email}
+                    onChange={handleServiceFormChange}
+                    required
+                    className="mt-2 w-full rounded-lg bg-white/10 px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                 </div>
                 <div>
                   <label className="text-xs uppercase tracking-[0.3em] text-white/60">Subject</label>
                   <select
-                    className="mt-2 w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white focus:border-white/60 focus:outline-none"
+                    className="mt-2 w-full rounded-lg bg-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={selectedService}
                     onChange={(event) => setSelectedService(event.target.value)}
                   >
@@ -328,15 +500,26 @@ export default function Services() {
                   <textarea
                     rows={4}
                     placeholder="Share goals, timeline, or links"
-                    className="mt-2 w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 focus:border-white/60 focus:outline-none"
+                    name="summary"
+                    value={serviceForm.summary}
+                    onChange={handleServiceFormChange}
+                    className="mt-2 w-full rounded-lg bg-white/10 px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                 </div>
                 <button
-                  type="button"
-                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-red-500/50 bg-gradient-to-r from-red-600/80 to-red-500/70 px-4 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-white transition hover:shadow-[0_0_26px_rgba(255,26,26,0.45)]"
+                  type="submit"
+                  disabled={serviceFormStatus.submitting}
+                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-red-600/80 to-red-500/70 px-4 py-3 text-sm font-semibold uppercase tracking-[0.4em] text-white transition hover:shadow-[0_0_26px_rgba(255,26,26,0.45)]"
                 >
-                  SEND REQUEST
+                  {serviceFormStatus.submitting ? 'SENDING...' : 'SEND REQUEST'}
                 </button>
+
+                {serviceFormStatus.success && (
+                  <p className="text-center text-xs uppercase tracking-[0.3em] text-green-400">Message sent. We'll reply within 24h.</p>
+                )}
+                {serviceFormStatus.error && (
+                  <p className="text-center text-xs uppercase tracking-[0.3em] text-red-400">{serviceFormStatus.error}</p>
+                )}
               </form>
             </div>
 

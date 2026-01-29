@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { Mail, Phone, MapPin, Send, CheckCircle, ArrowRight } from "lucide-react"
+import { sendContactEmail } from "@/lib/utils"
 
 export function ContactNeon() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export function ContactNeon() {
   
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -23,22 +25,31 @@ export function ContactNeon() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate sending (replace with your sending logic)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    setIsSubmitting(true)
+    setIsSubmitted(false)
+    setErrorMessage("")
+
+    try {
+      await sendContactEmail({
+        ...formData,
+        source: "Contact section",
+      })
+
+      setIsSubmitted(true)
       setFormData({
         name: "",
         email: "",
         phone: "",
         subject: "",
-        message: ""
-      });
-      
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+        message: "",
+      })
+
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (error) {
+      setErrorMessage(error?.message || "Unable to send your message. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   };
 
   const contactInfo = [
@@ -132,7 +143,7 @@ export function ContactNeon() {
 
         {/* Main Content Container */}
         <motion.div
-          className="relative rounded-3xl border border-red-500/30 bg-gradient-to-b from-red-500/5 via-black to-black p-8 md:p-12 mb-16 overflow-hidden group"
+          className="relative rounded-3xl bg-gradient-to-b from-red-500/5 via-black to-black p-8 md:p-12 mb-16 overflow-hidden group"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -171,8 +182,8 @@ export function ContactNeon() {
                     whileHover={{ x: 8 }}
                     className="group/item relative"
                   >
-                    <div className="relative flex items-center gap-5 p-5 bg-black/30 border border-red-500/20 rounded-xl group-hover/item:border-red-500/50 group-hover/item:bg-black/50 transition-all duration-300">
-                      <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-red-600/20 to-red-800/20 border border-red-500/30 group-hover/item:shadow-[0_0_20px_rgba(255,26,26,0.3)] transition-all duration-300">
+                    <div className="relative flex items-center gap-5 p-5 bg-black/30 rounded-xl group-hover/item:bg-black/50 transition-all duration-300">
+                      <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-red-600/20 to-red-800/20 group-hover/item:shadow-[0_0_20px_rgba(255,26,26,0.3)] transition-all duration-300">
                         <info.icon className="w-6 h-6 text-red-500" />
                       </div>
                       
@@ -196,33 +207,6 @@ export function ContactNeon() {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Why Choose Us Box */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                viewport={{ once: false }}
-                className="p-6 bg-gradient-to-br from-red-600/10 via-black to-black border border-red-500/20 rounded-xl"
-              >
-                <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  <div className="w-1 h-5 bg-red-500 rounded-full"></div>
-                  Why Choose Byte?
-                </h4>
-                <ul className="space-y-3">
-                  {[
-                    "24h response time",
-                    "Free project consultation",
-                    "Personalized approach",
-                    "Cutting-edge solutions"
-                  ].map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-gray-300 text-sm">
-                      <CheckCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
             </motion.div>
 
             {/* Contact Form Section */}
@@ -372,6 +356,18 @@ export function ContactNeon() {
                   >
                     <p className="text-red-400 text-center text-sm">
                       Thank you! We'll get back to you within 24 hours.
+                    </p>
+                  </motion.div>
+                )}
+
+                {errorMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
+                  >
+                    <p className="text-red-400 text-center text-sm">
+                      {errorMessage}
                     </p>
                   </motion.div>
                 )}

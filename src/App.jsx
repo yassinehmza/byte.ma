@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, Routes, Route, useLocation } from 'react-router-dom'
-import LogoMark from '@/assets/byte shape.png'
+import ProfileLogo from '@/assets/logo profil .png'
 import Home from '@/pages/Home'
 import About from '@/pages/About'
 import Services from '@/pages/Services'
@@ -8,9 +8,7 @@ import Services from '@/pages/Services'
 const navLinks = [
   { label: 'Home', type: 'route', to: '/' },
   { label: 'About', type: 'route', to: '/about' },
-  { label: 'Method', type: 'hash', hash: '#method' },
   { label: 'Services', type: 'route', to: '/services' },
-  { label: 'Why Byte', type: 'hash', hash: '#why-byte' },
   { label: 'Contact', type: 'hash', hash: '#contact' },
 ]
 
@@ -21,6 +19,13 @@ export default function App() {
   useEffect(() => {
     setMenuOpen(false)
   }, [location.pathname, location.hash])
+
+  const handleHomeNavClick = (event) => {
+    if (location.pathname === '/') {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   const isActive = (item) => {
     if (item.type === 'route') {
@@ -41,17 +46,26 @@ export default function App() {
     <div className="min-h-screen bg-black text-white">
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-xl border-b border-white/10">
         <nav className="w-full px-6 py-4 flex items-center gap-6">
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-semibold tracking-tight">Byte</span>
-            <img src={LogoMark} alt="Byte.ma logo" className="h-10 w-10 object-contain" />
+          <div className="flex items-center gap-4">
+            <Link to="/" onClick={handleHomeNavClick} aria-label="Go to home">
+              <img src={ProfileLogo} alt="Byte.ma logo" className="h-16 w-16 rounded-full object-cover" />
+            </Link>
           </div>
 
           <div className="ml-auto hidden md:flex flex-1 items-center justify-between max-w-3xl text-sm font-medium">
-            {navLinks.map((item) => (
-              <Link key={item.label} to={resolveLinkTarget(item)} className={desktopLinkClasses(item)}>
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              const isHomeLink = item.type === 'route' && item.to === '/'
+              return (
+                <Link
+                  key={item.label}
+                  to={resolveLinkTarget(item)}
+                  className={desktopLinkClasses(item)}
+                  onClick={isHomeLink ? handleHomeNavClick : undefined}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
           </div>
 
           <button
@@ -71,11 +85,19 @@ export default function App() {
         {menuOpen && (
           <div className="md:hidden px-6 pb-4 bg-black/90 border-b border-white/10 backdrop-blur-xl">
             <div className="flex flex-col gap-3 text-sm font-medium">
-              {navLinks.map((item) => (
-                <Link key={item.label} to={resolveLinkTarget(item)} className={mobileLinkClasses(item)}>
-                  {item.label}
-                </Link>
-              ))}
+              {navLinks.map((item) => {
+                const isHomeLink = item.type === 'route' && item.to === '/'
+                return (
+                  <Link
+                    key={item.label}
+                    to={resolveLinkTarget(item)}
+                    className={mobileLinkClasses(item)}
+                    onClick={isHomeLink ? handleHomeNavClick : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}

@@ -270,6 +270,43 @@ export default function Home() {
 			<MethodNeon />
 			<ServicesNeon />
 			<ContactNeon />
+
+			<section className="border-t border-white/25 px-4 py-16 lg:px-12">
+				<div className="mx-auto max-w-7xl">
+					<div className="about-marquee-wrapper" aria-hidden="true">
+						<div className="about-marquee-track">
+							{[...Array(2)].map((_, outerIndex) => (
+								<div key={outerIndex} className="about-marquee-group">
+									<p className="about-marquee-text">BYTE AGENCY</p>
+									<p className="about-marquee-text about-marquee-alt">BYTE AGENCY</p>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<button
+						type="button"
+						className="about-section-indicator"
+						aria-label="Back to top"
+						onClick={() => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })}
+					>
+						<span className="about-section-track">
+							<span className="about-section-runner" />
+						</span>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="about-section-icon"
+							aria-hidden="true"
+						>
+							<path strokeLinecap="round" strokeLinejoin="round" d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />
+						</svg>
+					</button>
+				</div>
+			</section>
 		</>
 	)
 }
