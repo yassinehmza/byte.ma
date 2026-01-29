@@ -91,6 +91,8 @@ export default function About() {
                 <img
                   src={HeroStill}
                   alt="Byte team on set"
+                  loading="lazy"
+                  decoding="async"
                   className="relative z-10 h-full w-full object-cover"
                 />
               </div>

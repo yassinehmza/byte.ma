@@ -437,7 +437,13 @@ export default function Services() {
                           {category.image && (
                             <div className="flex-1">
                               <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/40">
-                                <img src={category.image} alt={category.name} className="h-full w-full object-cover" />
+                                <img
+                                  src={category.image}
+                                  alt={category.name}
+                                  loading="lazy"
+                                  decoding="async"
+                                  className="h-full w-full object-cover"
+                                />
                               </div>
                             </div>
                           )}

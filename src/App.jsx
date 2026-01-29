@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Link, Routes, Route, useLocation } from 'react-router-dom'
 import ProfileLogo from '@/assets/logo profil .png'
-import Home from '@/pages/Home'
-import About from '@/pages/About'
-import Services from '@/pages/Services'
+
+const Home = lazy(() => import('@/pages/Home'))
+const About = lazy(() => import('@/pages/About'))
+const Services = lazy(() => import('@/pages/Services'))
 
 const navLinks = [
   { label: 'Home', type: 'route', to: '/' },
@@ -48,7 +49,7 @@ export default function App() {
         <nav className="w-full px-6 py-4 flex items-center gap-6">
           <div className="flex items-center gap-4">
             <Link to="/" onClick={handleHomeNavClick} aria-label="Go to home">
-              <img src={ProfileLogo} alt="Byte.ma logo" className="h-16 w-16 rounded-full object-cover" />
+              <img src={ProfileLogo} alt="Byte.ma logo" decoding="async" className="h-16 w-16 rounded-full object-cover" />
             </Link>
           </div>
 
@@ -104,11 +105,13 @@ export default function App() {
       </header>
 
       <main className="pt-24">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-        </Routes>
+        <Suspense fallback={<div className="flex h-[60vh] items-center justify-center text-white/70">Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   )

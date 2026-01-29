@@ -17,6 +17,9 @@ const firstBinaryGroupLength = binarySequence.slice(0, 2).join(" ").length;
 
 const CyberMatrixHero = () => {
   const gridRef = useRef(null);
+  const frameRef = useRef(null);
+  const latestPointer = useRef({ x: 0, y: 0 });
+  const prefersReducedMotionRef = useRef(false);
   const [isClient, setIsClient] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const [charIndex, setCharIndex] = useState(0);
@@ -61,6 +64,8 @@ const CyberMatrixHero = () => {
     const chars = "01";
     let columns = 0;
     let rows = 0;
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotionRef.current = motionPreference.matches;
 
     const createTile = () => {
       const tile = document.createElement("div");
@@ -85,7 +90,7 @@ const CyberMatrixHero = () => {
     const createGrid = () => {
       grid.innerHTML = "";
 
-      const size = 50;
+      const size = window.innerWidth > 1024 ? 50 : 60;
       columns = Math.floor(window.innerWidth / size);
       rows = Math.floor(window.innerHeight / size);
 
@@ -118,6 +123,15 @@ const CyberMatrixHero = () => {
       }
     };
 
+    const schedulePointerUpdate = (x, y) => {
+      latestPointer.current = { x, y };
+      if (frameRef.current !== null) return;
+      frameRef.current = requestAnimationFrame(() => {
+        frameRef.current = null;
+        updateIntensityForPosition(latestPointer.current.x, latestPointer.current.y);
+      });
+    };
+
     const resetIntensity = () => {
       for (const tile of grid.children) {
         tile.style.setProperty("--intensity", 0);
@@ -125,19 +139,29 @@ const CyberMatrixHero = () => {
     };
 
     const handlePointerMove = (event) => {
-      updateIntensityForPosition(event.clientX, event.clientY);
+      if (prefersReducedMotionRef.current) return;
+      schedulePointerUpdate(event.clientX, event.clientY);
     };
 
     const handleTouchMove = (event) => {
       if (!event.touches || event.touches.length === 0) return;
       const primaryTouch = event.touches[0];
-      updateIntensityForPosition(primaryTouch.clientX, primaryTouch.clientY);
+      if (prefersReducedMotionRef.current) return;
+      schedulePointerUpdate(primaryTouch.clientX, primaryTouch.clientY);
     };
 
     const handleTouchStart = (event) => {
       if (!event.touches || event.touches.length === 0) return;
       const primaryTouch = event.touches[0];
-      updateIntensityForPosition(primaryTouch.clientX, primaryTouch.clientY);
+      if (prefersReducedMotionRef.current) return;
+      schedulePointerUpdate(primaryTouch.clientX, primaryTouch.clientY);
+    };
+
+    const handleMotionPreferenceChange = (event) => {
+      prefersReducedMotionRef.current = event.matches;
+      if (event.matches) {
+        resetIntensity();
+      }
     };
 
     window.addEventListener("resize", createGrid);
@@ -147,6 +171,7 @@ const CyberMatrixHero = () => {
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", resetIntensity);
     window.addEventListener("touchcancel", resetIntensity);
+    motionPreference.addEventListener("change", handleMotionPreferenceChange);
 
     createGrid();
 
@@ -158,6 +183,10 @@ const CyberMatrixHero = () => {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", resetIntensity);
       window.removeEventListener("touchcancel", resetIntensity);
+      motionPreference.removeEventListener("change", handleMotionPreferenceChange);
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
     };
   }, [isClient]);
 
