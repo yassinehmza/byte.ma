@@ -37,7 +37,8 @@ const CurvedLoop = ({
   const ready = spacing > 0
 
   useEffect(() => {
-    if (measureRef.current) setSpacing(measureRef.current.getComputedTextLength())
+    if (measureRef.current) 
+      setSpacing(measureRef.current.getComputedTextLength())
   }, [text, className])
 
   useEffect(() => {
